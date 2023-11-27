@@ -57,7 +57,6 @@
                                     </p>
                                 </a>
                             </li>
-                            <li class="nav-header">Maintenance</li>
                             <li class="nav-item dropdown">
                                 <a href="{{route('categories.index')}}" class="nav-link nav-categories">
                                     <i class="nav-icon fas fa-th-list"></i>

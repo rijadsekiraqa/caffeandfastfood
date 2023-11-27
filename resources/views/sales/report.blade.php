@@ -10,35 +10,46 @@
             <div class="container-fluid">
                 <div class="card card-outline rounded-0 card-navy">
                     <div class="card-header">
-                        <h3 class="card-title">Raporti Ditor i Shitjeve</h3>
+                        <h3 class="card-title">Raporti i Shitjeve</h3>
                     </div>
                     <div class="card-body">
                         <div class="container-fluid">
                             <fieldset class="border px-2 mb-2 ,x-2">
-                                <legend class="w-auto px-2">Filter</legend>
+                                <legend class="w-auto px-2">Filtro Shitjet</legend>
                                 <form id="filter-form" action="{{ route('sales-report') }}" method="get">
                                     @csrf
-                                    <div class="row align-items-end">
+                                    <div class="row align-items-end justify-content-center">
                                         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                                             <div class="form-group">
-                                                <label for="date">Data</label>
-                                                <input type="date" name="date" value="{{ $date }}" class="form-control form-control-sm rounded-0" required>
+                                                <label for="date">Nga Data</label>
+                                                <input type="date" name="fromdate" value="{{ $fromDate }}" class="form-control form-control-sm rounded-0" required>
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                                             <div class="form-group">
-                                                <label for="user_id">User</label>
+                                                <label for="date">Deri ne Daten</label>
+                                                <input type="date" name="todate" value="{{ $toDate }}" class="form-control form-control-sm rounded-0" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                                            <div class="form-group">
+                                                <label for="user_id">Perdoruesit</label>
                                                 <select name="user_id" class="form-control form-control-sm" required>
-                                                    <option value="">Selektoni nje Perdorues </option>
+                                                    <option value="">Zgjidhni nje Perdorues </option>
+                                                    <option value="all" {{ $userId === 'all' ? 'selected' : '' }}>Te Gjithe Perdoruesit</option> <!-- New option for All users --> <!-- New option for All users -->
                                                     @foreach($users as $user)
                                                         <option value="{{ $user->id }}" {{ $user->id == $userId ? 'selected' : '' }}>
-                                                            {{ $user->firstname }} {{ $user->lastname }}
+                                                            {{ $user->firstname }} {{ $user->lastname }} -
+                                                            @foreach($user->roles as $role)
+                                                                {{ ucfirst($role->name) }}
+                                                            @endforeach
                                                         </option>
                                                     @endforeach
                                                 </select>
 
                                             </div>
                                         </div>
+
                                         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                                             <div class="form-group">
                                                 <button type="submit" class="btn btn-primary rounded-0 btn-sm"><i class="fa fa-filter"></i> Filtro</button>
@@ -63,9 +74,8 @@
                                         <th>#</th>
                                         <th>Data</th>
                                         <th>Kodi i shitjeve</th>
-{{--                                        <th>Emri i Klientit</th>--}}
-                                        <th>User</th>
-                                        <th>Shuma</th>
+                                        <th>Perdoruesi</th>
+                                        <th>Totali i Faktures</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -74,20 +84,19 @@
                                         <td class="text-center">{{ $index + 1 }}</td>
                                         <td><p class="m-0">{{ $sale->created_at }}</p></td>
                                         <td><p class="m-0">{{ $sale->payment_code }}</p></td>
-{{--                                        <td><p class="m-0"></p></td>--}}
                                         <td class=''>{{ $sale->user->firstname ?? '' }} {{ $sale->user->lastname ?? '' }}</td>
                                         <td>{{ number_format($sale->amount, 2, '.', '') }}</td>
                                     </tr>
                                     @endforeach
                                     @if($sales->isEmpty())
                                         <tr>
-                                            <td colspan="6" class="text-center">Nuk u gjet asnje shitje e regjistuar nga ky perdorues</td>
+                                            <td colspan="6" class="text-center">Nuk u gjet asnje shitje e regjistuar nga ky perdorues ne kete periudhe kohore</td>
                                         </tr>
                                     @endif
                                     </tbody>
                                     <tfoot>
                                     <tr>
-                                        <th colspan="4" class="text-center">Totali</th>
+                                        <th colspan="4" class="text-center">Gjate kesaj periudhes kohore ky perdorues ka regjistruar shitje ne total </th>
                                         <th class="text-left">{{ number_format( $totalAmount, 2, '.', '') }}</th>
                                     </tr>
                                     </tfoot>
@@ -111,43 +120,40 @@
                         </div>
                         <div class="col-8 text-center" style="line-height:.9em">
                             <h4 class="text-center m-0"></h4>
-                            <h3 class="text-center m-0"><b>Daily Sales Report</b></h3>
+                            <h3 class="text-center m-0"><b>Raporti i Shitjeve </b></h3>
                             <h5 class="text-center m-0"><b>as of</b></h5>
                             <h3 class="text-center m-0"><b></b></h3>
                         </div>
                     </div>
                     <hr>
                 </noscript>
-                <script>
-                    $(document).ready(function(){
-                        $('#report-list td,#report-list th').addClass('py-1 px-2 align-middle')
-                        $('#print').click(function(){
-                            var head = $('head').clone()
-                            var p = $($('#printout').html()).clone()
-                            var phead = $($('noscript#print-header').html()).clone()
-                            var el = $('<div class="container-fluid">')
-                            head.find('title').text("Daily Sales Report-Print View")
-                            el.append(phead)
-                            el.append(p)
-                            el.find('.bg-gradient-navy').css({'background':'#001f3f linear-gradient(180deg, #26415c, #001f3f) repeat-x !important','color':'#fff'})
-                            el.find('.bg-gradient-secondary').css({'background':'#6c757d linear-gradient(180deg, #828a91, #6c757d) repeat-x !important','color':'#fff'})
-                            el.find('tr.bg-gradient-navy').attr('style',"color:#000")
-                            el.find('tr.bg-gradient-secondary').attr('style',"color:#000")
-                            start_loader();
-                            var nw = window.open("", "_blank", "width=1000, height=900")
-                            nw.document.querySelector('head').innerHTML = head.prop('outerHTML')
-                            nw.document.querySelector('body').innerHTML = el.prop('outerHTML')
-                            nw.document.close()
-                            setTimeout(()=>{
-                                nw.print()
-                                setTimeout(()=>{
-                                    nw.close()
-                                    end_loader()
-                                },300)
-                            },500)
-                        })
-                    })
 
-                </script>
+    <script>
+        $(document).ready(function () {
+            $('#submit-form').click(function (event) {
+                event.preventDefault(); // Prevent the default form submission
+
+                var formData = $('#filter-form').serialize();
+
+                $.ajax({
+                    url: "{{ route('sales-report') }}",
+                    type: 'get',
+                    data: formData,
+                    success: function (data) {
+                        $('#result-container').html(data);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+    </script>
+
+
+    @push('scripts')
+        <script src="{{ asset('js/salesdate-compare.js') }}"></script>
+        <script src="{{ asset('js/reportsales-print.js') }}"></script>
+    @endpush
     @include('layouts.footer-admin')
 @endsection

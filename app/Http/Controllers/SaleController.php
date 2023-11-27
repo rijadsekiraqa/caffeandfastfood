@@ -185,25 +185,34 @@ class SaleController extends Controller
 
     public function salesreport(Request $request)
     {
-        $date = $request->input('date');
+        $fromDate = $request->input('from_date');
+        $toDate = $request->input('to_date');
         $userId = $request->input('user_id', null);
 
+        // Eager load the 'role' relationship for users
+        $users = User::with('roles')->get();
 
-        $sales = Sale::with('user')
-            ->when($date, function ($query) use ($date) {
-                $query->whereDate('created_at', $date);
+        $salesQuery = Sale::with('user')
+            ->when($fromDate, function ($query) use ($fromDate) {
+                $query->whereDate('created_at', '>=', $fromDate);
             })
-            ->when($userId, function ($query) use ($userId) {
+            ->when($toDate, function ($query) use ($toDate) {
+                $query->whereDate('created_at', '<=', $toDate);
+            })
+            ->when($userId !== 'all', function ($query) use ($userId) {
                 $query->where('user_id', $userId);
-            })
-            ->get();
+            });
+
+        $sales = $salesQuery->get();
 
         $totalAmount = $sales->sum('amount');
 
-
-        $users = \App\Models\User::all();
-        return view('sales/report', compact('sales', 'date', 'userId', 'totalAmount', 'users'));
+        return view('sales/report', compact('sales', 'fromDate', 'toDate', 'userId', 'totalAmount', 'users'));
     }
+
+
+
+
 
 
 }

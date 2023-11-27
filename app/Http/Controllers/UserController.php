@@ -185,9 +185,9 @@ class UserController extends Controller
         $user = Auth::user();
 
         // Update user data based on the form input
-        $user->firstname = $request->input('firstname');
-        $user->lastname = $request->input('lastname');
-        $user->username = $request->input('username');
+        $user->firstname = ucfirst($request->input('firstname'));
+        $user->lastname = ucfirst($request->input('lastname'));
+        $user->username = strtolower($request->input('username'));
         $user->email = $request->input('email');
 
         // Check if a new password is provided
