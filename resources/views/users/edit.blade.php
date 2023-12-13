@@ -9,7 +9,7 @@
             <div class="card-body">
                 <div class="container-fluid">
                     <div id="msg"></div>
-                    <form method="post" action="/users/{{$user->id}}">
+                    <form method="post" action="{{ route('users.update',['user' => $user->id]) }}">
                         @csrf
                         @method("PUT")
                         <div class="form-group">

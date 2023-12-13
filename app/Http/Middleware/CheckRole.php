@@ -8,10 +8,9 @@ use Closure;
 class CheckRole
 {
     public function handle($request, Closure $next, ...$roles)
-
     {
-        // Check if the authenticated user has any of the specified roles
-        if (auth()->check() && auth()->user()->hasAnyRole(...$roles)) {
+        // Check if the authenticated user has the specified role
+        if (auth()->check() && auth()->user()->hasRole(...$roles)) {
             return $next($request);
         }
 

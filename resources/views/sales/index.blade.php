@@ -27,7 +27,6 @@
                                         <col width="5%">
                                         <col width="20%">
                                         <col width="20%">
-{{--                                        <col width="25%">--}}
                                         <col width="15%">
                                         <col width="5%">
                                     </colgroup>
@@ -35,9 +34,8 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Data</th>
-                                        <th>Kodi</th>
-{{--                                        <th>Klienti</th>--}}
-                                        <th>Shuma</th>
+                                        <th>Kodi i Shitjes</th>
+                                        <th>Totali i Faktures</th>
                                         <th class="text-center">Vepro</th>
                                     </tr>
                                     </thead>
@@ -49,7 +47,7 @@
                                         <td>{{$sale->payment_code}}</td>
                                         <td>{{ number_format($sale->amount, 2, '.', '') }}</td>
                                         <td class="text-center">
-                                            <a class="" href="{{ route('sales.view-product', ['sale' => $sale->id]) }}" data-id=""><span class="fa fa-eye text-dark"></span> </a>
+                                            <a class="" href="{{ route('sales.view-sale', ['sale' => $sale->id]) }}" data-id=""><span class="fa fa-eye text-dark"></span> </a>
                                         </td>
                                     </tr>
                                     @endforeach

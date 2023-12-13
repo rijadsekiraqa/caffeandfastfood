@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post" action="">
+                <form method="post" action="{{route('categories.store')}}">
                     @csrf
                     @method("POST")
                     <div class="form-group">

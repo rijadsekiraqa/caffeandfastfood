@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post" action="/categories/{{$category->id}}" id="category-form">
+                <form method="post" action="{{ route('categories.update',['category' => $category->id]) }}" id="category-form">
                     @csrf
                     @method("PUT")
                     <div class="form-group">

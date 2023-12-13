@@ -51,17 +51,16 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function hasAnyRole(...$roles)
-    {
-        return $this->roles->pluck('name')->intersect($roles)->isNotEmpty();
-    }
 
+    public function hasRole($role): bool
+    {
+        return $this->roles->pluck('name')->contains($role);
+    }
 
     public function roles()
     {
         return $this->belongsToMany(Role::class);
     }
-
 
     public function sales()
     {

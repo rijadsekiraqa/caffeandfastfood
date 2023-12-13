@@ -6,18 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
+
 
     use AuthenticatesUsers;
 
@@ -40,34 +32,35 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
-        // Customize this method to return your custom login view
         return view('auth.login');
     }
 
 
     public function login(Request $request)
     {
-        // Validate the form data
         $request->validate([
-            'email' => 'required|email',
+            'identity' => 'required',
             'password' => 'required',
         ]);
 
-        // Explicitly define $credentials
-        $credentials = $request->only('email', 'password');
+        $identity = $request->input('identity');
+        $password = $request->input('password');
 
-        // Attempt to log in the user
+        $loginField = filter_var($identity, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+        $credentials = [
+            $loginField => $identity,
+            'password' => $password,
+        ];
+
         if (auth()->attempt($credentials)) {
-            // Authentication passed...
-            return redirect()->intended('/admin-dashboard'); // Customize the redirect path after successful login
+            return redirect()->intended('/admin-dashboard');
         }
 
-        // If authentication fails, redirect back to the login form with an error message
-        return redirect()->back()->withInput($request->only('email', 'remember'))->withErrors([
-            'email' => 'These credentials do not match our records.',
+        return redirect()->back()->withInput($request->only('identity', 'remember'))->withErrors([
+            'login' => 'Email apo Fjalekalimi eshte gabim',
         ]);
     }
-
 
 
 }

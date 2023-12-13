@@ -4,25 +4,31 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    use PermissionTrait;
+
 
     public function __construct()
     {
-        $this->middleware('role:admin');
+        $this->middleware('auth');
     }
+
 
 
     public function index()
     {
-        return view('categories/index',[
-          'categories' => Category::all()
-        ]);
+        $user = Auth::User();
+        if ($this->hasPermissions('show_products', $user)) {
+            return view('categories/index', [
+                'categories' => Category::all()
+            ]);
+        }
+        abort(403, 'Ju nuk keni akses ne kete dritare');
+
     }
 
     /**
@@ -30,7 +36,11 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('categories/create');
+        $user = Auth::User();
+        if ($this->hasPermissions('show_products', $user)) {
+            return view('categories/create');
+        }
+        abort(403, 'Ju nuk keni akses ne kete dritare');
     }
 
     /**
@@ -38,12 +48,17 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $name = $request->input('name');
-        Category::create([
-            'name' => $name,
-        ]);
-        Session::flash('success', 'Kategoria u regjistrua me sukses');
-        return redirect('/categories');
+        $user = Auth::User();
+        if ($this->hasPermissions('show_products', $user)) {
+            $name = $request->input('name');
+            Category::create([
+                'name' => $name,
+            ]);
+            Session::flash('success', 'Kategoria u regjistrua me sukses');
+            return redirect('admin-dashboard/categories');
+        }
+        abort(403, 'Ju nuk keni akses ne kete dritare');
+
     }
 
     /**
@@ -51,10 +66,15 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        $category = Category::findorFail($id);
-        return view('categories/edit',[
-            'category' => $category
-        ]);
+        $user = Auth::User();
+        if ($this->hasPermissions('show_products', $user)) {
+            $category = Category::findorFail($id);
+            return view('categories/edit', [
+                'category' => $category
+            ]);
+        }
+        abort(403, 'Ju nuk keni akses ne kete dritare');
+
     }
 
     /**
@@ -62,11 +82,14 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        $category = Category::findOrFail($id);
-        return view('categories/edit', [
-            'category' => $category,
-        ]);
-
+        $user = Auth::User();
+        if ($this->hasPermissions('show_products', $user)) {
+            $category = Category::findOrFail($id);
+            return view('categories/edit', [
+                'category' => $category,
+            ]);
+        }
+        abort(403, 'Ju nuk keni akses ne kete dritare');
     }
 
     /**
@@ -74,14 +97,18 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $category = Category::findorFail($id);
-        $name = $request->input('name');
+        $user = Auth::User();
+        if ($this->hasPermissions('show_products', $user)) {
+            $category = Category::findorFail($id);
+            $name = $request->input('name');
 
-        $category->name = $name;
+            $category->name = $name;
 
-        $category->save();
-        Session::flash('success', 'Kategoria u perditesua me sukses');
-        return redirect('categories');
+            $category->save();
+            Session::flash('success', 'Kategoria u perditesua me sukses');
+            return redirect('admin-dashboard/categories');
+        }
+         abort(403, 'Ju nuk keni akses ne kete dritare');
     }
 
     /**
@@ -89,8 +116,12 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        $category->delete();
-        Session::flash('success', 'Kategoria u fshi me sukses');
-        return redirect('categories');
+        $user = Auth::User();
+        if ($this->hasPermissions('show_products', $user)) {
+            $category->delete();
+            Session::flash('success', 'Kategoria u fshi me sukses');
+            return redirect('admin-dashboard/categories');
+        }
+        abort(403, 'Ju nuk keni akses ne kete dritare');
     }
 }

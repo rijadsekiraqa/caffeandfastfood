@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Coffee Shop Cashiering System</title>
+    <title>Caffe & Fast Food System</title>
     <link rel="icon" href="http://localhost/cscs/uploads/logo.png?v=1650590302" />
     <!-- Google Font: Source Sans Pro -->
     <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback"> -->
@@ -65,16 +65,24 @@
         background: #8080801c;
     }
 </style>
-<h1 class="text-center text-white px-4 py-5" id="page-title"><b>Coffee Shop Cashiering System</b></h1>
+<h1 class="text-center text-white px-4 py-5" id="page-title"><b>Caffe & Fast Food System</b></h1>
 <div class="login-box">
     <!-- /.login-logo -->
     <div class="card card-navy my-2">
         <div class="card-body">
-            <p class="login-box-msg">Please enter your credentials</p>
+{{--            <p class="login-box-msg">Please enter your credentials</p>--}}
+            <img src="../uploads/logo.png" alt="Store Logo" class="mx-auto mb-2 d-block brand-image img-circle elevation-3"
+                 style="opacity: .8;width: 47px;max-height: unset">
             <form id="login-frm" action="{{ route('login') }}" method="post">
                 @csrf
+                @method("POST")
+                @if ($errors->has('login'))
+                    <div class="alert alert-danger">
+                        {{ $errors->first('login') }}
+                    </div>
+                @endif
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" name="email" autofocus placeholder="email">
+                    <input type="text" class="form-control" name="identity" autofocus placeholder="Email apo Username" required>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-user"></span>
@@ -82,7 +90,7 @@
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="password" class="form-control"  name="password" placeholder="Password">
+                    <input type="password" class="form-control"  name="password" placeholder="Password" required>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-lock"></span>
@@ -90,34 +98,17 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-8">
-                        <!-- <a href="">Go to Website</a> -->
+                    <div class="col-4 mx-auto">
+                        <button type="submit" class="btn btn-primary btn-block">Kyqu</button>
                     </div>
-                    <!-- /.col -->
-                    <div class="col-4">
-                        <button type="submit" class="btn btn-primary btn-block">Sign In</button>
-                    </div>
-                    <!-- /.col -->
                 </div>
             </form>
-            <!-- /.social-auth-links -->
-
-            <!-- <p class="mb-1">
-              <a href="forgot-password.html">I forgot my password</a>
-            </p> -->
-
         </div>
-        <!-- /.card-body -->
     </div>
-    <!-- /.card -->
 </div>
-<!-- /.login-box -->
 
-<!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- AdminLTE App -->
 <script src="dist/js/adminlte.min.js"></script>
 
 <script>

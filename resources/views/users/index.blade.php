@@ -71,4 +71,6 @@
     </div>
 
     @include('layouts.footer-admin')
+
+
 @endsection

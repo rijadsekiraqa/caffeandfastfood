@@ -1,8 +1,8 @@
 
     document.addEventListener('DOMContentLoaded', function () {
     // Get the from date and to date input fields
-    const fromDateInput = document.querySelector('input[name="fromdate"]');
-    const toDateInput = document.querySelector('input[name="todate"]');
+    const fromDateInput = document.querySelector('input[name="from_date"]');
+    const toDateInput = document.querySelector('input[name="to_date"]');
 
     // Add an event listener to the form submission
     const filterForm = document.getElementById('filter-form');
@@ -14,8 +14,6 @@
     // Validate the dates
     if (!validateDates(fromDate, toDate)) {
     event.preventDefault();
-
-
     alert('Data e mbarimit nuk mund te jete me e vogel se data e fillimit ');
 }
 });

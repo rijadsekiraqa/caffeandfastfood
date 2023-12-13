@@ -19,22 +19,20 @@
                                     class="fas fa-th-list"></i></span>
                             <div class="info-box-content">
                                 <span class="info-box-text">Kategorite</span>
-                                <span class="info-box-number text-right">
-
-
-                </span>
+                                <span class="info-box-number text-right">{{$category}}</span>
                             </div>
                             <!-- /.info-box-content -->
                         </div>
                         <!-- /.info-box -->
                     </div>
+
                     <div class="col-12 col-sm-4 col-md-4">
                         <div class="info-box">
                             <span class="info-box-icon bg-gradient-navy elevation-1"><i
                                     class="fas fa-mug-hot"></i></span>
                             <div class="info-box-content">
                                 <a href="#"> <span class="info-box-text">Produktet</span></a>
-                                <span class="info-box-number text-right">
+                                <span class="info-box-number text-right">{{$product}}
 
                 </span>
                             </div>
@@ -51,7 +49,7 @@
                             <div class="info-box-content">
                                 <span class="info-box-text">Shitjet Ditore</span>
                                 <span class="info-box-number text-right">
-
+  {{ $totalSalesForToday }}
                 </span>
                             </div>
                             <!-- /.info-box-content -->

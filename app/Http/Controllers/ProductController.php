@@ -4,25 +4,32 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    use PermissionTrait;
+
 
     public function __construct()
     {
-        $this->middleware('role:admin');
+        $this->middleware('auth');
     }
 
 
     public function index()
     {
-        return view('products/index',[
-            'products' => Product::all()
-        ]);
+        $user = Auth::user();
+        if ($this->hasPermissions('show_products', $user)) {
+            return view('products/index', [
+                'products' => Product::all()
+            ]);
+        }
+        return 'Nuk ekziston';
+
     }
 
     /**
@@ -32,7 +39,7 @@ class ProductController extends Controller
     {
         $products = Product::all();
         $categories = Category::all();
-        return view('Products/create',[
+        return view('Products/create', [
             'product' => $products,
             'category' => $categories
         ]);
@@ -56,12 +63,12 @@ class ProductController extends Controller
 
         Product::create([
 
-        'category_id' => $category_id,
-        'name' => $name,
-        'price' => $price
+            'category_id' => $category_id,
+            'name' => $name,
+            'price' => $price
         ]);
         Session::flash('success', 'Produkti u regjistrua me sukses');
-        return redirect('products');
+        return redirect('admin-dashboard/products');
 
     }
 
@@ -71,7 +78,7 @@ class ProductController extends Controller
     public function show(string $id)
     {
         $product = Product::findorFail($id);
-        return view('products/edit',[
+        return view('products/edit', [
             'product' => $product
         ]);
     }
@@ -100,7 +107,7 @@ class ProductController extends Controller
 
         $product->save();
         Session::flash('success', 'Produkti u perditesua me sukses');
-        return redirect('products');
+        return redirect('admin-dashboard/products');
     }
 
     /**
@@ -110,6 +117,6 @@ class ProductController extends Controller
     {
         $product->delete();
         Session::flash('success', 'Produkti u fshi me sukses');
-        return redirect('products');
+        return redirect('admin-dashboard/products');
     }
 }

@@ -26,7 +26,7 @@
             </div>
             <div class="card-body">
                 <div class="container-fluid">
-                    <form method="post" action="/sales" id="sale-form">
+                    <form method="post" action="{{route('sales.store')}}" id="sale-form">
                         @csrf
                         @method("POST")
 
@@ -81,7 +81,7 @@
                                         <tr class="bg-gradient-navy-dark">
                                             <th class="text-center px-2 py-1">Sasia</th>
                                             <th class="text-center px-2 py-1">Produkti</th>
-                                            <th class="text-center px-2 py-1">Totali</th>
+                                            <th class="text-center px-2 py-1">Qmimi</th>
                                             <th class="text-center px-2 py-1"></th>
                                         </tr>
                                         </thead>
@@ -167,7 +167,7 @@
 </noscript>
 
 
-    <!-- Here i want to call scriot -->
+
 
     @push('scripts')
         <script src="{{ asset('js/calcproduct.js') }}"></script>

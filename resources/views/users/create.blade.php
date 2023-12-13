@@ -11,10 +11,9 @@
     <div class="card-body">
         <div class="container-fluid">
             <div id="msg"></div>
-            <form method="post" action="/users">
+            <form method="post" action="{{route('users.store')}}">
                 @csrf
                 @method("POST")
-
                 <div class="form-group">
                     <label for="name">Emri</label>
                     <input type="text" name="firstname" id="firstname" class="form-control" value="" required>
@@ -32,7 +31,7 @@
                     <input type="email" name="email" id="email" class="form-control" value="" required>
                 </div>
                 <div class="form-group">
-                    <label for="password"> Password</label>
+                    <label for="password">Password</label>
                     <input type="password" name="password" id="password" class="form-control" value="" autocomplete="off">
                 </div>
                 <div class="form-group">
@@ -40,7 +39,7 @@
                     <select name="role" id="type" class="form-control form-control-sm rounded-0" required>
                         <option value=""> Select </option>
                         <option value="admin">Administrator</option>
-                        <option value="staff">Staff</option>
+                        <option value="staff">Staf</option>
                     </select>
                 </div>
 {{--                <div class="form-group">--}}

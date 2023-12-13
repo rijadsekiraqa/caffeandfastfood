@@ -1,5 +1,5 @@
 
-    $(document).ready(function(){
+    $(window).on('load', function() {
     $('#report-list td,#report-list th').addClass('py-1 px-2 align-middle')
     $('#print').click(function(){
     var head = $('head').clone()

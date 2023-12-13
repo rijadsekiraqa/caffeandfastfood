@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post" action="/products/{{$product->id}}" id="product-form">
+                <form method="post" action="{{ route('products.update',['product' => $product->id]) }}" id="product-form">
                     @csrf
                     @method("PUT")
                     <div class="form-group">
@@ -37,17 +37,20 @@
     </div>
 </div>
 </div>
-<script>
-    const priceInput = document.getElementById("price");
+{{--<script>--}}
+{{--    const priceInput = document.getElementById("price");--}}
 
-    priceInput.addEventListener("input", function () {
-        // Get the current value of the input
-        let value = priceInput.value;
+{{--    priceInput.addEventListener("input", function () {--}}
+{{--        // Get the current value of the input--}}
+{{--        let value = priceInput.value;--}}
 
-        // Format the value with two decimal places
-        value = parseFloat(value).toFixed(2);
+{{--        // Format the value with two decimal places--}}
+{{--        value = parseFloat(value).toFixed(2);--}}
 
-        // Set the formatted value back to the input
-        priceInput.value = value;
-    });
-</script>
+{{--        // Set the formatted value back to the input--}}
+{{--        priceInput.value = value;--}}
+{{--    });--}}
+{{--</script>--}}
+
+
+

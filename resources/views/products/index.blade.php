@@ -52,7 +52,7 @@
                                             <a href="#view-product-{{$product->id}}" data-toggle="modal"><span class="fa fa-eye text-dark"></span> </a>&nbsp;&nbsp;
                                             @include('products.edit')
                                             <a href="#edit-product-{{$product->id}}" data-toggle="modal"><span class="fa fa-edit text-primary"></span> </a>&nbsp;&nbsp;
-                                            <a href="{{ route('products.destroy', ['product' => $product->id]) }}" onclick="return confirm('Do you want to delete');"><span class="fa fa-trash text-danger"></span> </a>
+                                            <a href="{{ route('products.destroy', ['product' => $product->id]) }}" onclick="return confirm('A jeni i sigurt qe deshironi te fshini kete produkt');"><span class="fa fa-trash text-danger"></span> </a>
 
                                     </td>
                                 </tr>
@@ -69,6 +69,9 @@
 
 
 
+    @push('scripts')
+        <script src="{{ asset('js/decimal-places-product.js') }}"></script>
+    @endpush
 
     @include('layouts.footer-admin')
 @endsection

@@ -209,3 +209,17 @@ body>section {
     background-color: #785c51;
     border-color: #785c51;
 }
+
+.sale-info{
+    font-size: 18px;
+}
+
+#printout{
+    font-family: math;
+}
+
+
+#sale-title{
+    font-size: 23px;
+}
+

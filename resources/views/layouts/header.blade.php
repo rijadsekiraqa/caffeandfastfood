@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>assa</title>
+    <title>Caffe & Fast Food System</title>
 
 
     <link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.min.css')}}">
@@ -32,7 +32,6 @@
     <link rel="stylesheet" href="{{asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
 
 
-    </style>
     <style>
         .user-img{
             position: absolute;
@@ -67,67 +66,34 @@
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="" class="nav-link">Coffee Shop Cashiering System - Admin</a>
+            <a href="/admin-dashboard" class="nav-link">Caffe & Fast Food System</a>
         </li>
     </ul>
-    <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-        <!-- Navbar Search -->
-        <!-- <li class="nav-item">
-          <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-          <i class="fas fa-search"></i>
-          </a>
-          <div class="navbar-search-block">
-            <form class="form-inline">
-              <div class="input-group input-group-sm">
-                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-                <div class="input-group-append">
-                  <button class="btn btn-navbar" type="submit">
-                  <i class="fas fa-search"></i>
-                  </button>
-                  <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                  <i class="fas fa-times"></i>
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </li> -->
-        <!-- Messages Dropdown Menu -->
         <li class="nav-item">
             <div class="btn-group nav-link">
                 <button type="button" class="btn btn-rounded badge badge-light dropdown-toggle dropdown-icon" data-toggle="dropdown">
-                    <span><img src="uploads/avatars/1.png" class="img-circle elevation-2 user-img" alt="User Image"></span>
                     <span class="ml-3">{{ $user->firstname }} {{ $user->lastname }}</span>
                     <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <div class="dropdown-menu" role="menu">
-                    <a class="dropdown-item" href="{{ route('adminprofile') }}"><span class="fa fa-user"></span> My Account</a>
+                    <a class="dropdown-item" href="{{ route('adminprofile') }}"><span class="fa fa-user"></span> Profili Im</a>
                     <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item" onclick="logout()"><span class="fas fa-sign-out-alt"></span> Logout</a>
+                    <a href="#" class="dropdown-item" onclick="logout()"><span class="fas fa-sign-out-alt"></span> Dil</a>
                 </div>
             </div>
         </li>
         <li class="nav-item">
 
         </li>
-        <!--  <li class="nav-item">
-           <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-           <i class="fas fa-th-large"></i>
-           </a>
-         </li> -->
     </ul>
 </nav>
 
     <script>
         function logout() {
-            // You can perform additional actions here before logging out if needed
             $.post('{{ route('logout') }}', {_token: '{{ csrf_token() }}'}, function () {
-                // This function is executed after the logout is successful
-                // You can redirect or perform other actions here if needed
                 window.location.href = '{{ route('login') }}';
             });
         }
     </script>
-<!-- /.navbar -->
 @yield('content')

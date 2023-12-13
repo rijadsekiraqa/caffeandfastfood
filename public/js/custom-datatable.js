@@ -22,14 +22,7 @@ $(document).ready(function() {
         // Add classes to table cells (if needed)
         $('.dataTable td, .dataTable th', this).addClass('py-1 px-2 align-middle');
 
-        // Debugging: Log some information about the table
-        console.log('Table API:', table);
-        console.log('Table data source:', table.ajax.json());
 
-        // Debugging: Log column information
-        table.columns().header().each(function(index) {
-            console.log('Column ' + index + ' data source:', table.column(index).dataSrc());
-        });
     });
 });
 
